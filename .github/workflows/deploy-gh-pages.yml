@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main # 当推送到 main 分支时触发此工作流
+      - master # 当推送到 main 分支时触发此工作流
 
 permissions:
   contents: write # 允许 GitHub Actions 写入仓库内容 (用于发布到 gh-pages 分支)
