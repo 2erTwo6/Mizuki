@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # 当推送到 main 分支时触发此工作流
+
+permissions:
+  contents: write # 允许 GitHub Actions 写入仓库内容 (用于发布到 gh-pages 分支)
+  pages: write     # 允许 GitHub Actions 写入 GitHub Pages
+  id-token: write  # 允许 GitHub Actions 获取 ID Token (用于 OIDC 认证)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout your repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Mizuki 要求 Node.js >= 20
+          cache: 'pnpm'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: '9' # Mizuki 要求 pnpm >= 9
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Astro project
+        run: pnpm build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist' # 上传构建好的 dist 目录
+
+  deploy:
+    needs: build # 确保在 build 任务完成后才运行 deploy 任务
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4 # 部署到 GitHub Pages
