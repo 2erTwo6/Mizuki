@@ -3,12 +3,12 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - master # 当推送到 main 分支时触发此工作流
+      - master # 确保这里是您的 master 分支
 
 permissions:
-  contents: write # 允许 GitHub Actions 写入仓库内容 (用于发布到 gh-pages 分支)
-  pages: write     # 允许 GitHub Actions 写入 GitHub Pages
-  id-token: write  # 允许 GitHub Actions 获取 ID Token (用于 OIDC 认证)
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -17,16 +17,17 @@ jobs:
       - name: Checkout your repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20' # Mizuki 要求 Node.js >= 20
-          cache: 'pnpm'
-
+      # 关键改动：将 pnpm/action-setup 放在 setup-node 之前
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: '9' # Mizuki 要求 pnpm >= 9
+          version: '9'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm' # setup-node 会自动处理 pnpm 的缓存
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -37,10 +38,10 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # 上传构建好的 dist 目录
+          path: './dist'
 
   deploy:
-    needs: build # 确保在 build 任务完成后才运行 deploy 任务
+    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -48,4 +49,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 # 部署到 GitHub Pages
+        uses: actions/deploy-pages@v4
