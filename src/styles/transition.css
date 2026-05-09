@@ -150,16 +150,10 @@ html.is-animating .transition-swup-fade {
 .onload-animation,
 .transition-slide-in,
 .card-animation {
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform;
 }
 
 /* GPU 加速优化 - 用于 wave 等重型动画 */
 .gpu-accelerated {
-  transform: translateZ(0);
-  will-change: transform;
-  backface-visibility: hidden;
   isolation: isolate;
 }
 
