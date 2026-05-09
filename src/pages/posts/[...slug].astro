@@ -27,7 +27,6 @@ import {
 	shareConfig,
 } from "src/config";
 
-import Image from "../../components/atoms/Image/Image.astro";
 import Encryptor from "../../components/features/auth/Encryptor.astro";
 import { profileConfig, siteConfig } from "../../config";
 import { formatDateToYYYYMMDD } from "../../utils/date-utils";
@@ -288,24 +287,6 @@ const jsonLd = {
 					)
 				}
 			</div>
-
-			<!-- always show cover as long as it has one -->
-
-			{
-				entry.data.image && siteConfig.showCoverInContent && (
-					<>
-						<div class="mt-4" />
-						<Image
-							id="post-cover"
-							src={entry.data.image}
-							basePath={getFileDirFromPath(entry.filePath || "")}
-							class="mb-8 rounded-xl banner-container onload-animation"
-							widths={[640, 1024, 1536, 2048]}
-							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
-						/>
-					</>
-				)
-			}
 
 			{
 				isEncrypted ? (

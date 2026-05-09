@@ -6,14 +6,7 @@ import type { SiteConfig } from "../types/config";
 import type { widgetManager } from "./widget-manager";
 
 /**
- * Banner 图片配置
- */
-export interface BannerImages {
-	desktop: string | string[];
-	mobile: string | string[];
-}
 
-/**
  * 布局配置接口
  */
 export interface GridLayoutConfig {
@@ -191,51 +184,6 @@ export function calculateGridLayout(
 		tabletAnySidebar,
 		initialRightSidebarHidden,
 		desktopMainPos,
-	};
-}
-
-/**
- * 获取 Banner 图片
- */
-export async function getBannerImages(
-	siteConfig: SiteConfig,
-): Promise<BannerImages> {
-	let bannerSrc = siteConfig.banner.src;
-
-	// 如果启用了图片API，获取API图片
-	if (siteConfig.banner.imageApi?.enable && siteConfig.banner.imageApi?.url) {
-		try {
-			const response = await fetch(siteConfig.banner.imageApi.url);
-			const text = await response.text();
-			const apiImages = text.split("\n").filter((line) => line.trim());
-
-			if (apiImages.length > 0) {
-				bannerSrc = apiImages;
-			}
-		} catch (error) {
-			console.warn("Failed to fetch images from API:", error);
-		}
-	}
-
-	if (
-		typeof bannerSrc === "object" &&
-		bannerSrc !== null &&
-		!Array.isArray(bannerSrc) &&
-		("desktop" in bannerSrc || "mobile" in bannerSrc)
-	) {
-		const srcObj = bannerSrc as {
-			desktop?: string | string[];
-			mobile?: string | string[];
-		};
-		return {
-			desktop: srcObj.desktop || srcObj.mobile || "",
-			mobile: srcObj.mobile || srcObj.desktop || "",
-		};
-	}
-	// 如果是字符串或字符串数组，同时用于桌面端和移动端
-	return {
-		desktop: bannerSrc as string | string[],
-		mobile: bannerSrc as string | string[],
 	};
 }
 
