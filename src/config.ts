@@ -272,14 +272,14 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		{
-			name: "About",
-			url: "/about/",
-			icon: "material-symbols:person",
-		},
-		{
 			name: "Friends",
 			url: "/friends/",
 			icon: "material-symbols:group",
+		},
+		{
+			name: "About",
+			url: "/about/",
+			icon: "material-symbols:person",
 		},
 	],
 };
