@@ -6,8 +6,6 @@ import { LinkPresets } from "../../../constants/link-presets"
 import { LinkPreset, type NavBarLink } from "../../../types/config"
 import { url } from "../../../utils/url-utils"
 import LayoutSwitch from "../../control/LayoutSwitch.svelte"
-import ThemeSwitch from "../../control/ThemeSwitch.svelte"
-import DisplaySettings from "../../features/settings/DisplaySettings.svelte"
 import MobileTOC from "../../features/toc/MobileTOC.svelte"
 import DropdownMenu from "./DropdownMenu.astro"
 import NavMenuPanel from "./NavMenuPanel.astro"
@@ -92,19 +90,12 @@ const iconWebpSrc = hasIconPngFallback ? iconSrc.replace(/\.png$/i, ".webp") : i
             </div>
             {/* 只在 sidebar 模式下显示移动端 TOC 按钮 */}
 			{siteConfig.toc.enable && siteConfig.toc.mobileTop && <MobileTOC client:only="svelte"></MobileTOC>}
-            {!siteConfig.themeColor.fixed && (
-                    <button aria-label="Display Settings" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="display-settings-switch">
-                        <Icon name="material-symbols:palette-outline" class="text-[1.25rem]"></Icon>
-                    </button>
-            )}
             <LayoutSwitch client:only="svelte" currentLayout={siteConfig.postListLayout.defaultMode}></LayoutSwitch>
-            <ThemeSwitch client:only="svelte"></ThemeSwitch>
             <button aria-label="Menu" name="Nav Menu" class="btn-plain scale-animation rounded-lg w-11 h-11 active:scale-90 md:!hidden" id="nav-menu-switch">
                 <Icon name="material-symbols:unfold-more" class="text-[1.25rem]"></Icon>
             </button>
         </div>
         <NavMenuPanel links={links}></NavMenuPanel>
-        <DisplaySettings client:only="svelte"></DisplaySettings>
     </div>
 </div>
 
