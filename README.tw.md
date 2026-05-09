@@ -1,5 +1,5 @@
 # 🌸 Mizuki
-<img align='right' src='logo.png' width='200px' alt="Mizuki logo">
+<img align='right' src='logo.jpg' width='200px' alt="Mizuki logo">
 
 一個現代化、功能豐富的靜態部落格模板，基於 [Astro](https://astro.build) 構建，具有先進的功能和精美的設計。
 

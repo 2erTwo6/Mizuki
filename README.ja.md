@@ -1,5 +1,5 @@
 # 🌸 Mizuki
-<img align='right' src='logo.png' width='200px' alt="Mizuki logo">
+<img align='right' src='logo.jpg' width='200px' alt="Mizuki logo">
 
 [Astro](https://astro.build) で構築された高度な機能と美しいデザインを備えた、モダンで機能が豊富な静的ブログテンプレート。
 
