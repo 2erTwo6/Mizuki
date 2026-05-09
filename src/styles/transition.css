@@ -151,7 +151,7 @@ html.is-animating .transition-swup-fade {
 .transition-slide-in,
 .card-animation {
   backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: auto;
   transform: translateZ(0);
   will-change: transform;
 }
