@@ -382,39 +382,9 @@ export class SwupHooksManager {
 	 * 解决从首页进入文章页面时代码块渲染问题
 	 */
 	private syncThemeState(): void {
-		const storedTheme =
-			localStorage.getItem(THEME_CONFIG.themeStorageKey) ||
-			THEME_CONFIG.lightMode;
-		const isDark = storedTheme === THEME_CONFIG.darkMode;
-		const expectedTheme = isDark
-			? THEME_CONFIG.darkExpressiveTheme
-			: THEME_CONFIG.lightExpressiveTheme;
-
-		const currentTheme =
-			document.documentElement.getAttribute("data-theme");
-		const hasDarkClass =
-			document.documentElement.classList.contains("dark");
-
-		// 如果主题不匹配，使用批量更新减少重绘
-		if (currentTheme !== expectedTheme || hasDarkClass !== isDark) {
-			requestAnimationFrame(() => {
-				// 同步 data-theme 属性
-				if (currentTheme !== expectedTheme) {
-					document.documentElement.setAttribute(
-						"data-theme",
-						expectedTheme,
-					);
-				}
-				// 同步 dark class
-				if (hasDarkClass !== isDark) {
-					if (isDark) {
-						document.documentElement.classList.add("dark");
-					} else {
-						document.documentElement.classList.remove("dark");
-					}
-				}
-			});
-		}
+		// Force dark mode always
+		document.documentElement.classList.add("dark");
+		document.documentElement.setAttribute("data-theme", THEME_CONFIG.darkExpressiveTheme);
 	}
 
 	/**
